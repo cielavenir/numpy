@@ -20,7 +20,7 @@ New functions
 
     >>> with np.printoptions(precision=2):
     ...     print(np.array([2.0])) / 3
-    [0.67] 
+    [0.67]
 
 
 Deprecations
@@ -118,6 +118,13 @@ For all types of scalar or 0d input, the result is now a scalar.
 ---------------------------------------------------
 ``np.flatnonzero`` now uses ``np.ravel(a)`` instead of ``a.ravel()``, so it
 works for lists, tuples, etc.
+
+Do not make temporary copies for in-place accumulation
+------------------------------------------------------
+When ufuncs perform accumulation they no longer make temporary copies because
+of the overlap between input an output, that is, the next element accumulated
+is added before the accumulated result is stored in its place, hence the
+overlap is safe. Avoiding the copy results in faster execution.
 
 Changes
 =======
