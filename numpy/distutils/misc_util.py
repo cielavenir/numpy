@@ -92,7 +92,8 @@ def get_num_build_jobs():
 
     """
     from numpy.distutils.core import get_distribution
-    envjobs = int(os.environ.get("NPY_NUM_BUILD_JOBS", 1))
+    from multiprocessing import cpu_count
+    envjobs = int(os.environ.get("NPY_NUM_BUILD_JOBS", cpu_count()))
     dist = get_distribution()
     # may be None during configuration
     if dist is None:
