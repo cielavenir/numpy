@@ -98,9 +98,9 @@ def zipfile_factory(file, *args, **kwargs):
     """
     if not hasattr(file, 'read'):
         file = os_fspath(file)
-    import zipfile
+    import zipfile39
     kwargs['allowZip64'] = True
-    return zipfile.ZipFile(file, *args, **kwargs)
+    return zipfile39.ZipFile(file, *args, **kwargs)
 
 
 class NpzFile(Mapping):
@@ -713,7 +713,7 @@ def savez_compressed(file, *args, **kwds):
 def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
     # Import is postponed to here since zipfile depends on gzip, an optional
     # component of the so-called standard library.
-    import zipfile
+    import zipfile39
 
     if not hasattr(file, 'write'):
         file = os_fspath(file)
@@ -729,11 +729,14 @@ def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
         namedict[key] = val
 
     if compress:
-        compression = zipfile.ZIP_DEFLATED
+        compression = zipfile39.ZIP_DEFLATED
+        # compression = zipfile39.ZIP_ZSTANDARD
+        compresslevel = -12
     else:
-        compression = zipfile.ZIP_STORED
+        compression = zipfile39.ZIP_STORED
+        compresslevel = None
 
-    zipf = zipfile_factory(file, mode="w", compression=compression)
+    zipf = zipfile_factory(file, mode="w", compression=compression, compresslevel=compresslevel)
 
     for key, val in namedict.items():
         fname = key + '.npy'
