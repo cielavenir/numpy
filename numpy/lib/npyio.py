@@ -98,9 +98,9 @@ def zipfile_factory(file, *args, **kwargs):
     """
     if is_pathlib_path(file):
         file = str(file)
-    import zipfile
+    import zipfile39
     kwargs['allowZip64'] = True
-    return zipfile.ZipFile(file, *args, **kwargs)
+    return zipfile39.ZipFile(file, *args, **kwargs)
 
 
 class NpzFile(object):
@@ -662,7 +662,7 @@ def savez_compressed(file, *args, **kwds):
 def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
     # Import is postponed to here since zipfile depends on gzip, an optional
     # component of the so-called standard library.
-    import zipfile
+    import zipfile39
 
     if isinstance(file, basestring):
         if not file.endswith('.npz'):
@@ -680,13 +680,14 @@ def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
         namedict[key] = val
 
     if compress:
-        compression = zipfile.ZIP_DEFLATED
+        # compression = zipfile39.ZIP_DEFLATED
+        compression = zipfile39.ZIP_ZSTANDARD
     else:
-        compression = zipfile.ZIP_STORED
+        compression = zipfile39.ZIP_STORED
 
     zipf = zipfile_factory(file, mode="w", compression=compression)
 
-    if sys.version_info >= (3, 6):
+    if True:  # sys.version_info >= (3, 6):
         # Since Python 3.6 it is possible to write directly to a ZIP file.
         for key, val in namedict.items():
             fname = key + '.npy'
