@@ -64,7 +64,7 @@ def process_pyx(fromfile, tofile):
         try:
             # Try the one on the path as a last resort
             subprocess.check_call(
-                ['cython'] + flags + ["-o", tofile, fromfile])
+                [sys.executable, '-m', 'cython'] + flags + ["-o", tofile, fromfile])
         except OSError:
             raise OSError('Cython needs to be installed')
     else:
