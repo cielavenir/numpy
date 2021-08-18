@@ -1,0 +1,2 @@
+numpy/random/mtrand/mtrand.pyx 68b3e9320cb2a98dd71a904ed822bb74661b8be8 e81b9fed545e80c18ef0d16f1cd5540d649cdbf7
+numpy/random/mtrand/randint_helpers.pxi.in 906a207327a1131082ccfb8a7d30589635591093 11f22952895a87b32341cce1d119b8714313a2a2
