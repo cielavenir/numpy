@@ -717,12 +717,14 @@ def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
         namedict[key] = val
 
     if compress:
-        # compression = zipfile39.ZIP_DEFLATED
-        compression = zipfile39.ZIP_ZSTANDARD
+        compression = zipfile39.ZIP_DEFLATED
+        # compression = zipfile39.ZIP_ZSTANDARD
+        compresslevel = -2
     else:
         compression = zipfile39.ZIP_STORED
+        compresslevel = None
 
-    zipf = zipfile_factory(file, mode="w", compression=compression)
+    zipf = zipfile_factory(file, mode="w", compression=compression, compresslevel=compresslevel)
 
     if True:  # sys.version_info >= (3, 6):
         # Since Python 3.6 it is possible to write directly to a ZIP file.
