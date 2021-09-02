@@ -719,7 +719,7 @@ def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
     if compress:
         compression = zipfile39.ZIP_DEFLATED
         # compression = zipfile39.ZIP_ZSTANDARD
-        compresslevel = -2
+        compresslevel = -12
     else:
         compression = zipfile39.ZIP_STORED
         compresslevel = None
