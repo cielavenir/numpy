@@ -315,6 +315,12 @@ else:
         {"emath", "show_config", "__version__"}
     )
 
+    # Remove min and max from __all__ to avoid `from numpy import *` override
+    # the builtins min/max. Temporary fix for 1.25.x/1.26.x, see gh-24229.
+    __all__.remove('min')
+    __all__.remove('max')
+    __all__.remove('round')
+
     # Filter out Cython harmless warnings
     warnings.filterwarnings("ignore", message="numpy.dtype size changed")
     warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
