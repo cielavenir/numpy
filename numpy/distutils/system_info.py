@@ -305,7 +305,8 @@ else:
         # Explicitly open/close file to avoid ResourceWarning when
         # tests are run in debug mode Python 3.
         tmp = open(os.devnull, 'w')
-        p = subprocess.Popen(["gcc", "-print-multiarch"], stdout=subprocess.PIPE,
+        cc = os.environ.get("CC", distutils.sysconfig.get_config_var("CC"))
+        p = subprocess.Popen(cc.split() + ["-print-multiarch"], stdout=subprocess.PIPE,
                      stderr=tmp)
     except (OSError, DistutilsError):
         # OSError if gcc is not installed, or SandboxViolation (DistutilsError
