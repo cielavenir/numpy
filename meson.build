@@ -90,3 +90,13 @@ endif
 
 subdir('meson_cpu')
 subdir('numpy')
+
+# things to required to get distutils-installed
+pkginfo_conf = configuration_data()
+pkginfo_conf.set('VERSION', meson.project_version())
+configure_file(input : 'egg-info/PKG-INFO.in',
+output : 'PKG-INFO',
+configuration : pkginfo_conf,
+install_dir : py.get_install_dir(pure : false) / '@0@-@1@-py@2@.egg-info'.format(meson.project_name().to_lower(), meson.project_version(), py.language_version()))
+install_data(sources : ['egg-info/entry_points.txt', 'egg-info/top_level.txt'],
+install_dir : py.get_install_dir(pure : false) / '@0@-@1@-py@2@.egg-info'.format(meson.project_name().to_lower(), meson.project_version(), py.language_version()))
